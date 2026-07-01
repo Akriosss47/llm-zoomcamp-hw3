@@ -1,0 +1,12 @@
+id: skunk_106442
+namespace: company.team
+
+tasks:
+  - id: download_taxi_data
+    type: io.kestra.plugin.core.http.Download
+    uri: https://raw.githubusercontent.com/stephenleo/nyc-taxi/refs/heads/master/data.csv
+    type: io.kestra.plugin.gcp.bigquery.Load
+    from: "{{ outputs.download_taxi_data.uri }}"
+    destinationTable: "my_project.my_dataset.nyc_taxi_data" 
+    csvOptions:
+      skipLeadingRows: 1 
